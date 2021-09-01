@@ -14,7 +14,7 @@ def loadMNISTDatabase(method="keras", saveLocal=True):
 
     Parameters
     ----------
-    method :    string which contains 'keras' or 'local'
+    method :    string which contains the phrase 'keras' or 'local'
                 keras: The datasets getting loaded from the keras library
                 local: The datasets getting loaded from the local copy
     saveLocal:  boolean
