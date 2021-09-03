@@ -2,7 +2,6 @@
 from keras.datasets import mnist
 import numpy as np
 import gzip
-import os.path
 import struct
 from array import array
 
@@ -67,5 +66,5 @@ def loadMNISTDatabase():
         x_test, y_test = loadFromLocalFile("data/t10k-images-idx3-ubyte.gz", "data/t10k-labels-idx1-ubyte.gz")
     else:
         print('Data comes from Keras data set')
-
+    print('*************************************************')
     return x_train, y_train, x_test, y_test
