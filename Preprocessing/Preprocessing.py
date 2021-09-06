@@ -11,7 +11,11 @@ class Preprocessing:
         Constructor
         Get data from the database
         """
+        print('*************************************************')
+        print('Preprocess Data')
+        print('')
         self.x_train, self.y_train, self.x_test, self.y_test = db.loadMNISTDatabase()
+        print('*************************************************')
 
     def getMNISTTrainData(self):
         """
