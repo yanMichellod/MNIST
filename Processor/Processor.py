@@ -15,22 +15,6 @@ from tensorflow.keras.layers import Dense
 from tensorflow.keras.layers import Flatten
 from tensorflow.keras.optimizers import SGD
 
-# scale pixels
-def preprocess_data(x_train, y_train, x_test, y_test):
-	# reshape dataset to have a single channel
-	x_train = x_train.reshape((x_train.shape[0], 28, 28, 1))
-	x_test = x_test.reshape((x_test.shape[0], 28, 28, 1))
-	# one hot encode target values
-	y_train = to_categorical(y_train)
-	y_test = to_categorical(y_test)
-	# convert from integers to floats
-	x_train = x_train.astype('float32')
-	x_test = x_test.astype('float32')
-	# normalize to range 0-1
-	x_train = x_train / 255.0
-	x_test = x_test / 255.0
-	# return normalized images
-	return x_train, y_train, x_test, y_test
 
 # define cnn model
 def define_model():
