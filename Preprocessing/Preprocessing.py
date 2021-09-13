@@ -1,4 +1,7 @@
-from Database import MNISTDatabase as db
+import sys
+sys.path.insert(0, '../Database')
+import MNISTDatabase as db
+from tensorflow.keras.utils import to_categorical
 
 
 class Preprocessing:
@@ -16,7 +19,7 @@ class Preprocessing:
         print('')
         self.x_train, self.y_train, self.x_test, self.y_test = db.loadMNISTDatabase()
         self.x_train_preprocess, self.y_train_preprocess, self.x_test_preprocess, self.y_test_preprocess =\
-            preprocess_data(self.x_train, self.y_train, self.x_test, self.y_test)
+            self.preprocess_data(self.x_train, self.y_train, self.x_test, self.y_test)
         print('*************************************************')
 
     """
@@ -68,7 +71,7 @@ class Preprocessing:
         -------
         self.x_train : uint8 numpy array training data with shape (60000, 28, 28)
         """
-        return self.x_train
+        return self.x_train_preprocess
 
     def getMNISTPreprocessedTrainLabel(self):
         """
@@ -77,7 +80,7 @@ class Preprocessing:
         -------
         self.y_train : uint8 numpy array training digit labels with shape (60000,)
         """
-        return self.y_train
+        return self.y_train_preprocess
 
     def getMNISTPreprocessedTestData(self):
         """
@@ -86,7 +89,7 @@ class Preprocessing:
         -------
         self.x_test : uint8 numpy array testing data with shape (10000, 28, 28)
         """
-        return self.x_test
+        return self.x_test_preprocess
 
     def getMNISTPreprocessedTestLabel(self):
         """
@@ -95,9 +98,9 @@ class Preprocessing:
         -------
         self.y_test : uint8 numpy array training digit labels with shape (10000,)
         """
-        return self.y_test
+        return self.y_test_preprocess
 
-    def preprocess_data(x_train, y_train, x_test, y_test):
+    def preprocess_data(self, x_train, y_train, x_test, y_test):
         """
         Method which scales pixels
 
