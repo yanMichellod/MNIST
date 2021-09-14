@@ -37,13 +37,13 @@ jobs:
           python-version: ${{ matrix.python-version }}
           auto-update-conda: true
           auto-activate-base: false
-          activate-environment: project
+          activate-environment: MNIST
           environment-file: envs/MNIST.yml
       # Runs a set of commands using the runners shell
       - name: Run tests
         shell: bash -l {0}
         run: |
           conda info -a
-          pytest -sv --cov=. test.py
+          pytest Test/test.py
     
         
