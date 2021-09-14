@@ -1,10 +1,10 @@
 import sys
 sys.path.insert(1, '../Database')
 import numpy as np
-import MNISTDatabase as db
+from MNISTDatabase import loadMNISTDatabase
 
 def test_load_data():
-        x_train, y_train, x_test, y_test = db.loadMNISTDatabase()
+        x_train, y_train, x_test, y_test = loadMNISTDatabase()
         # Test shape of the arrays
         np.testing.assert_equal(x_train.shape, (60000, 28, 28))
         np.testing.assert_equal(len(y_train), 60000)
