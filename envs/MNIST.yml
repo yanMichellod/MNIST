@@ -9,3 +9,4 @@ dependencies:
     - numpy==1.19.2
     - tensorflow==2.6.0
     - keras==2.6.0
+    - pytest
