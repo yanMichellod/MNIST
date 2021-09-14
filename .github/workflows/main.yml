@@ -35,9 +35,9 @@ jobs:
         with:
           miniconda-version: "latest"
           python-version: ${{ matrix.python-version }}
-          auto-update-conda:true
-          auto-activate-vase:false
-          activate-environment: project
+          auto-update-conda: true
+          auto-activate-base: false
+          activate-environment: MNIST
           environment-file: MNIST.yml
       # Runs a set of commands using the runners shell
       - name: Run tests
