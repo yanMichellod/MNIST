@@ -7,8 +7,8 @@ import math
 class Test(unittest.TestCase):
 
     def test_processor(self):
-        out = pro.runProcessor()
-        np.testing.assert_equal(out, 60000)
+        acc_baseline, acc_CNN, y_test, y_pred = pro.runProcessor(full=False)
+        assert acc_CNN > 0
 
 
 if __name__ == "__main__":

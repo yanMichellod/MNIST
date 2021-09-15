@@ -2,36 +2,30 @@
 # and https://www.kaggle.com/ashwani07/mnist-classification-using-random-forest
 
 import sys
-sys.path.insert(0, '../Database')
-import MNISTDatabase as db
+sys.path.insert(0, '../Preprocessing')
+import Preprocessing 
 
 from sklearn.ensemble import RandomForestClassifier  
 from sklearn.metrics import accuracy_score
-from tensorflow.keras.utils import to_categorical
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Conv2D
-from tensorflow.keras.layers import MaxPooling2D
-from tensorflow.keras.layers import Dense
-from tensorflow.keras.layers import Flatten
+from tensorflow.keras.layers import Conv2D, MaxPooling2D, Dense, Flatten
 from tensorflow.keras.optimizers import SGD
+import tensorflow as tf
+tf.random.set_seed(42)
+import random
+random.seed(42)
 
-# scale pixels
-def preprocess_data(x_train, y_train, x_test, y_test):
-	# reshape dataset to have a single channel
-	x_train = x_train.reshape((x_train.shape[0], 28, 28, 1))
-	x_test = x_test.reshape((x_test.shape[0], 28, 28, 1))
-	# one hot encode target values
-	y_train = to_categorical(y_train)
-	y_test = to_categorical(y_test)
-	# convert from integers to floats
-	x_train = x_train.astype('float32')
-	x_test = x_test.astype('float32')
-	# normalize to range 0-1
-	x_train = x_train / 255.0
-	x_test = x_test / 255.0
-	# return normalized images
-	return x_train, y_train, x_test, y_test
-
+# get Random Forest Baseline
+def get_baseline(pp):
+    # get MNIST data
+    x_train, y_train, x_test, y_test = pp.getMNISTTrainData(), pp.getMNISTTrainLabel(), pp.getMNISTTestData(), pp.getMNISTTestLabel()
+    # define Random forest and fit it
+    rf = RandomForestClassifier(n_estimators=100, random_state=42)
+    rf.fit(x_train.reshape(x_train.shape[0], 28*28),y_train)
+    # run prediction and return accuracy
+    pred = rf.predict(x_test.reshape(x_test.shape[0], 28*28))
+    return accuracy_score(y_test, pred)
+    
 # define cnn model
 def define_model():
 	model = Sequential()
@@ -45,26 +39,21 @@ def define_model():
 	model.compile(optimizer=opt, loss='categorical_crossentropy', metrics=['accuracy'])
 	return model
     
-def get_baseline(x_train, y_train, x_test, y_test):
-    rf = RandomForestClassifier(n_estimators=100)
-    rf.fit(x_train.reshape(x_train.shape[0], 28*28),y_train)
-    pred = rf.predict(x_test.reshape(x_test.shape[0], 28*28))
-    return accuracy_score(y_test, pred)
-    
-def runProcessor():
-    # load the datasets
-    x_train, y_train, x_test, y_test = db.loadMNISTDatabase()
+# run the processor
+def runProcessor(full=True):
+    pp = Preprocessing.Preprocessing(full)
     # Get RF baseline
-    acc_baseline = get_baseline(x_train, y_train, x_test, y_test)
+    acc_baseline = get_baseline(pp)
     print('Accuracy RF: %.3f' % (acc_baseline * 100.0))
-    # preprocess the data
-    x_train, y_train, x_test, y_test = preprocess_data(x_train, y_train, x_test, y_test)
-    # train the model
+    # get preprocessed data
+    x_train, y_train, x_test, y_test = pp.getMNISTPreprocessedTrainData(), pp.getMNISTPreprocessedTrainLabel(), pp.getMNISTPreprocessedTestData(), pp.getMNISTPreprocessedTestLabel()
+    # define and train the CNN model
     model = define_model()
     model.fit(x_train, y_train, epochs=10, batch_size=32, verbose=0)
 	# evaluate model on test dataset
     _, acc_CNN = model.evaluate(x_test, y_test, verbose=0)
     print('Accuracy CNN: %.3f' % (acc_CNN * 100.0))
-    return len(x_train)
+    y_pred = model.predict(x_test)
+    return acc_baseline, acc_CNN, y_test, y_pred
     
     
