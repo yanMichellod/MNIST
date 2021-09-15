@@ -9,7 +9,7 @@ class Preprocessing:
     Class Preprocessing used to pre-process data before using machine learning algorithm
     """
 
-    def __init__(self):
+    def __init__(self, full=True):
         """
         Constructor
         Get data from the database
@@ -18,6 +18,12 @@ class Preprocessing:
         print('Preprocess Data')
         print('')
         self.x_train, self.y_train, self.x_test, self.y_test = db.loadMNISTDatabase()
+        if not full:
+            print('TESTMODE --> Only subset of data used!')
+            self.x_train = self.x_train[0:100]
+            self.y_train = self.y_train[0:100]
+            self.x_test = self.x_test[0:10]
+            self.y_test = self.y_test[0:10]
         self.x_train_preprocess, self.y_train_preprocess, self.x_test_preprocess, self.y_test_preprocess =\
             self.preprocess_data(self.x_train, self.y_train, self.x_test, self.y_test)
         print('*************************************************')

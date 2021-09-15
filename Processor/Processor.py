@@ -40,8 +40,8 @@ def define_model():
 	return model
     
 # run the processor
-def runProcessor():
-    pp = Preprocessing.Preprocessing()
+def runProcessor(full=True):
+    pp = Preprocessing.Preprocessing(full)
     # Get RF baseline
     acc_baseline = get_baseline(pp)
     print('Accuracy RF: %.3f' % (acc_baseline * 100.0))
@@ -53,6 +53,7 @@ def runProcessor():
 	# evaluate model on test dataset
     _, acc_CNN = model.evaluate(x_test, y_test, verbose=0)
     print('Accuracy CNN: %.3f' % (acc_CNN * 100.0))
-    return len(x_train)
+    y_pred = model.predict(x_test)
+    return acc_baseline, acc_CNN, y_test, y_pred
     
     
