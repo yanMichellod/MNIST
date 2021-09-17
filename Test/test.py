@@ -1,7 +1,4 @@
-import sys
-sys.path.insert(1, '../Database')
 import numpy as np
-from MNISTDatabase import loadMNISTDatabase
 
 def test_load_data():
         x_train, y_train, x_test, y_test = loadMNISTDatabase()
