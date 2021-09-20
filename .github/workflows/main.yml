@@ -44,6 +44,6 @@ jobs:
         shell: bash -l {0}
         run: |
           conda info -a
-          pytest Test/test.py
+          pytest Test/test_Database.py
     
         
