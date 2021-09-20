@@ -10,6 +10,7 @@ def test_train_data_path():
     """
     print(os.getcwd())
     print(os.listdir('../'))
+    print(os.listdir(''))
     assert os.path.exists('../Database/data/train-images-idx3-ubyte.gz')
 
 def test_train_label_path():
