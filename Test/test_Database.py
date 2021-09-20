@@ -1,4 +1,4 @@
-from MNISTDatabase import loadMNISTDatabase
+from Database.MNISTDatabase import loadMNISTDatabase, loadFromLocalFile
 import numpy as np
 import os
 
