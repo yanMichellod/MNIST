@@ -8,6 +8,8 @@ def test_train_data_path():
     """
     Test if the path to the train data exist
     """
+    print(os.getcwd())
+    print(os.listdir('../'))
     assert os.path.exists('../Database/data/train-images-idx3-ubyte.gz')
 
 def test_train_label_path():
