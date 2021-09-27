@@ -33,7 +33,7 @@ jobs:
       - name: Black style the code
         uses: psf/black@stable
         with:
-            version: "20.8b0"
+            version: "21.8b0"
         
         
       # Runs a single command using the runners shell
