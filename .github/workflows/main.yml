@@ -31,9 +31,12 @@ jobs:
         
       #Blackened style the code
       - name: Black style the code
-        uses: psf/black@stable
+        uses: piotrpawlaczek/python-blacken@release/stable
         with:
-            version: "21.8b0"
+          line-length: '88'
+          path: '.'
+          sanity-check: 'safe'
+          only-check: 'no'
         
         
       # Runs a single command using the runners shell
