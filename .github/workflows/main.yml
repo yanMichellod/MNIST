@@ -28,7 +28,11 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Check out repository code
         uses: actions/checkout@v2
+        
+      #Blackened style the code
+      - name: Black style the code
         uses: psf/black@stable
+        
         
       # Runs a single command using the runners shell
       - name: Setup miniconda
