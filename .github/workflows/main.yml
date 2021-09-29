@@ -44,8 +44,6 @@ jobs:
         shell: bash -l {0}
         run: |
           sphinx-build docs sphinx  #generates html version of docs
-          touch sphinx/.nojekyll  #pages to be deployed are NOT a Jekyll site
-          coverage html -d sphinx/coverage  #dump coverage report into doc tree
 
       - name: Deploy documentation to GitHub Pages
         if: ${{ matrix.python-version == '3.8' }}  #deploys only one variant
