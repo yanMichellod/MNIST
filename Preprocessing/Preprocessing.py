@@ -1,5 +1,6 @@
 import sys
-sys.path.insert(0, '../Database')
+
+sys.path.insert(0, "../Database")
 import MNISTDatabase as db
 from tensorflow.keras.utils import to_categorical
 
@@ -14,23 +15,28 @@ class Preprocessing:
         Constructor
         Get data from the database
         """
-        print('*************************************************')
-        print('Preprocess Data')
-        print('')
+        print("*************************************************")
+        print("Preprocess Data")
+        print("")
         self.x_train, self.y_train, self.x_test, self.y_test = db.loadMNISTDatabase()
         if not full:
-            print('TESTMODE --> Only subset of data used!')
+            print("TESTMODE --> Only subset of data used!")
             self.x_train = self.x_train[0:100]
             self.y_train = self.y_train[0:100]
             self.x_test = self.x_test[0:10]
             self.y_test = self.y_test[0:10]
-        self.x_train_preprocess, self.y_train_preprocess, self.x_test_preprocess, self.y_test_preprocess =\
-            self.preprocess_data(self.x_train, self.y_train, self.x_test, self.y_test)
-        print('*************************************************')
+        (
+            self.x_train_preprocess,
+            self.y_train_preprocess,
+            self.x_test_preprocess,
+            self.y_test_preprocess,
+        ) = self.preprocess_data(self.x_train, self.y_train, self.x_test, self.y_test)
+        print("*************************************************")
 
     """
     Raw Data
     """
+
     def getMNISTTrainData(self):
         """
 
@@ -70,6 +76,7 @@ class Preprocessing:
     """
     Preprocess Data
     """
+
     def getMNISTPreprocessedTrainData(self):
         """
 
@@ -129,12 +136,10 @@ class Preprocessing:
         y_train = to_categorical(y_train)
         y_test = to_categorical(y_test)
         # convert from integers to floats
-        x_train = x_train.astype('float32')
-        x_test = x_test.astype('float32')
+        x_train = x_train.astype("float32")
+        x_test = x_test.astype("float32")
         # normalize to range 0-1
         x_train = x_train / 255.0
         x_test = x_test / 255.0
         # return normalized images
         return x_train, y_train, x_test, y_test
-
-    

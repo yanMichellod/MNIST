@@ -4,62 +4,71 @@ import gzip
 import struct
 import os
 
+
 def test_train_data_path():
     """
     Test if the path to the train data exist
     """
     print(os.getcwd())
-    assert os.path.exists('Database/data/train-images-idx3-ubyte.gz')
+    assert os.path.exists("Database/data/train-images-idx3-ubyte.gz")
+
 
 def test_train_label_path():
     """
     Test if the path to the train label exist
     """
-    assert os.path.exists('Database/data/train-labels-idx1-ubyte.gz')
+    assert os.path.exists("Database/data/train-labels-idx1-ubyte.gz")
+
 
 def test_test_data_path():
     """
     Test if the path to the test data exist
     """
-    assert os.path.exists('Database/data/t10k-images-idx3-ubyte.gz')
+    assert os.path.exists("Database/data/t10k-images-idx3-ubyte.gz")
+
 
 def test_test_label_path():
     """
     Test if the path to the test label exist
     """
-    assert os.path.exists('Database/data/t10k-labels-idx1-ubyte.gz')
+    assert os.path.exists("Database/data/t10k-labels-idx1-ubyte.gz")
+
 
 def test_train_data_not_corrupted():
     """
     Test if the train data are not corrupted
     """
-    with gzip.open("Database/data/train-images-idx3-ubyte.gz", 'rb') as file:
+    with gzip.open("Database/data/train-images-idx3-ubyte.gz", "rb") as file:
         magic, size = struct.unpack(">II", file.read(8))
     assert magic == 2051
+
 
 def test_train_label_not_corrupted():
     """
     Test if the train labels are not corrupted
     """
-    with gzip.open("Database/data/train-labels-idx1-ubyte.gz", 'rb') as file:
+    with gzip.open("Database/data/train-labels-idx1-ubyte.gz", "rb") as file:
         magic, size = struct.unpack(">II", file.read(8))
     assert magic == 2049
+
 
 def test_test_data_not_corrupted():
     """
     Test if the test data are not corrupted
     """
-    with gzip.open("Database/data/t10k-images-idx3-ubyte.gz", 'rb') as file:
+    with gzip.open("Database/data/t10k-images-idx3-ubyte.gz", "rb") as file:
         magic, size = struct.unpack(">II", file.read(8))
     assert magic == 2051
+
 
 def test_test_label_not_corrupted():
     """
     Test if the test label are not corrupted
     """
-    with gzip.open("Database/data/t10k-labels-idx1-ubyte.gz", 'rb') as file:
+    with gzip.open("Database/data/t10k-labels-idx1-ubyte.gz", "rb") as file:
         magic, size = struct.unpack(">II", file.read(8))
     assert magic == 2049
+
 
 def test_load_data_shape():
     x_train, y_train, x_test, y_test = loadMNISTDatabase()
