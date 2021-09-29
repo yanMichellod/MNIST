@@ -39,6 +39,24 @@ jobs:
           auto-activate-base: false
           activate-environment: MNIST
           environment-file: envs/MNIST.yml
+          
+      - name: Build documentation
+        shell: bash -l {0}
+        run: |
+          sphinx-build doc sphinx  #generates html version of docs
+          touch sphinx/.nojekyll  #pages to be deployed are NOT a Jekyll site
+          coverage html -d sphinx/coverage  #dump coverage report into doc tree
+          
+          
+      - name: Deploy documentation to GitHub Pages
+        if: ${{ matrix.python-version == '3.8' }}  #deploys only one variant
+        uses: crazy-max/ghaction-github-pages@v2
+        with:
+          target_branch: gh-pages
+          build_dir: sphinx
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
       # Runs a set of commands using the runners shell
       - name: Run tests
         shell: bash -l {0}
