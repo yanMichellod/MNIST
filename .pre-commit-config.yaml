@@ -3,12 +3,6 @@ repos:
     rev: 20.8b1
     hooks:
     -   id: black
-        args: [-a]
--   repo: https://gitlab.com/pycqa/flake8
-    rev: 3.8.4
-    hooks:
-    -   id: flake8
-        args: [-a]
 -   repo: https://github.com/timothycrosley/isort
     rev: 5.7.0
     hooks:
@@ -17,4 +11,4 @@ repos:
     rev: 1.4.0  
     hooks:
     -   id: interrogate
-        args: [--vv, -i, --fail-under=80]
+        args: [-vv, -i, --fail-under=80]
