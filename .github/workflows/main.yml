@@ -20,15 +20,15 @@ jobs:
     strategy:
       fail-fast: false #avoid cancelled builds if the other fails
       matrix:
-        python-version: ["3.8"]
+        python-version: {"3.8"}
             
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - name: Check out repository code
-        uses: actions/checkout@v2
-    
+      -name: Check out repository code
+       uses: actions/checkout@v2
+
+
       # Runs a single command using the runners shell
       - name: Setup miniconda
         uses: conda-incubator/setup-miniconda@v2
@@ -54,6 +54,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
+
       # Runs a set of commands using the runners shell
       - name: Run tests
         shell: bash -l {0}
