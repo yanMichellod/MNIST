@@ -41,11 +41,10 @@ jobs:
           environment-file: envs/MNIST.yml
           
       - name: Build documentation
-        shell: bash -l {0}
-        run: |
-          sphinx-build doc sphinx  #generates html version of docs
-          touch sphinx/.nojekyll  #pages to be deployed are NOT a Jekyll site
-          coverage html -d sphinx/coverage  #dump coverage report into doc tree
+        uses: ammaraskar/sphinx-action@master
+        with:
+          docs-folder: "docs/"
+          build-command: "sphinx-build -b html . _build"
           
           
       - name: Deploy documentation to GitHub Pages
