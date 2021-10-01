@@ -5,7 +5,7 @@ def test_preprocessing():
     """
     Test if the shapes of the preprocessed data are correct
     """
-    pp = Preprocessing(False)
+    pp = Preprocessing.Preprocessing(False)
     x_train, y_train, x_test, y_test = pp.getMNISTTrainData(), pp.getMNISTTrainLabel(), pp.getMNISTTestData(), pp.getMNISTTestLabel()
     np.testing.assert_equal(x_train.shape, (100, 28, 28))
     np.testing.assert_equal(y_train.shape, (100,))
