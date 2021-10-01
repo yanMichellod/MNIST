@@ -1,6 +1,4 @@
-import sys
-sys.path.insert(0, '../Processor')
-import Processor as pro
+from Processor import Processor as pro
 from sklearn.metrics import confusion_matrix
 import seaborn as sns
 import numpy as np

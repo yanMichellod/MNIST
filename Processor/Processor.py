@@ -1,9 +1,7 @@
 # Inspired by https://machinelearningmastery.com/how-to-develop-a-convolutional-neural-network-from-scratch-for-mnist-handwritten-digit-classification/
 # and https://www.kaggle.com/ashwani07/mnist-classification-using-random-forest
 
-import sys
-sys.path.insert(0, '../Preprocessing')
-import Preprocessing 
+from Preprocessing import Preprocessing 
 
 from sklearn.ensemble import RandomForestClassifier  
 from sklearn.metrics import accuracy_score
