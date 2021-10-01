@@ -62,8 +62,8 @@ def loadMNISTDatabase(forceLoadLocalFiles=False):
     if len(x_train) == 0 or forceLoadLocalFiles:
         print('!! Connection to Keras dataset failed !!') 
         print('Take data from project storage')
-        x_train, y_train = loadFromLocalFile("data/train-images-idx3-ubyte.gz", "data/train-labels-idx1-ubyte.gz")
-        x_test, y_test = loadFromLocalFile("data/t10k-images-idx3-ubyte.gz", "data/t10k-labels-idx1-ubyte.gz")
+        x_train, y_train = loadFromLocalFile("./data/train-images-idx3-ubyte.gz", "./data/train-labels-idx1-ubyte.gz")
+        x_test, y_test = loadFromLocalFile("./data/t10k-images-idx3-ubyte.gz", "./data/t10k-labels-idx1-ubyte.gz")
     else:
         print('Data comes from Keras data set')
     print('*************************************************')
