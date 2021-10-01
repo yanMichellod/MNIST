@@ -1,6 +1,4 @@
-import sys
-sys.path.insert(0, '../Database')
-import MNISTDatabase as db
+from Database import MNISTDatabase as db
 from tensorflow.keras.utils import to_categorical
 
 
