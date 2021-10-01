@@ -44,7 +44,7 @@ def loadFromLocalFile(image_path, label_path):
     return images, labels
 
 
-def loadMNISTDatabase():
+def loadMNISTDatabase(forceLoadLocalFiles=False):
     """Load the MNIST train and test datasets.
     Returns
     -------
@@ -59,7 +59,7 @@ def loadMNISTDatabase():
     print('')
     (x_train, y_train), (x_test, y_test) = mnist.load_data()
 
-    if len(x_train) == 0:
+    if len(x_train) == 0 or forceLoadLocalFiles:
         print('!! Connection to Keras dataset failed !!') 
         print('Take data from project storage')
         x_train, y_train = loadFromLocalFile("data/train-images-idx3-ubyte.gz", "data/train-labels-idx1-ubyte.gz")
