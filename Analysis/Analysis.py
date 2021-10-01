@@ -4,6 +4,9 @@ import Processor as pro
 from sklearn.metrics import confusion_matrix
 import seaborn as sns
 import numpy as np
+from matplotlib.pyplot import figure
+
+figure(figsize=(11, 11), dpi=80)
 
 class Analysis:
     """
