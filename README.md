@@ -1,7 +1,7 @@
 [![CI Actions Status](https://github.com/yanMichellod/MNIST/workflows/CI/badge.svg)](https://github.com/yanMichellod/MNIST/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-[![Coverage: Coveralls](https://coveralls.io/repos/github/idiap/mai-m05-ex6/badge.svg?branch=master)](https://coveralls.io/github/idiap/mai-m05-ex6?branch=master)
+[![Coverage: Coveralls](https://https://coveralls.io/github/yanMichellod/MNIST/badge.svg?branch=master)](https://https://coveralls.io/github/yanMichellod/MNIST?branch=master)
 
 # MNIST
 
