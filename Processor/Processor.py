@@ -13,8 +13,19 @@ tf.random.set_seed(42)
 import random
 random.seed(42)
 
-# get Random Forest Baseline
 def get_baseline(pp):
+    """Run the random forest baseline and calculate accuracy
+
+    Parameters
+    ==========
+    pp : Preprocessor
+        Used to get the original MNIST data
+
+    Returns
+    =======
+    accuracy: boolean
+        The accuracy of the RF baseline
+    """
     # get MNIST data
     x_train, y_train, x_test, y_test = pp.getMNISTTrainData(), pp.getMNISTTrainLabel(), pp.getMNISTTestData(), pp.getMNISTTestLabel()
     # define Random forest and fit it
@@ -24,21 +35,46 @@ def get_baseline(pp):
     pred = rf.predict(x_test.reshape(x_test.shape[0], 28*28))
     return accuracy_score(y_test, pred)
     
-# define cnn model
 def define_model():
-	model = Sequential()
-	model.add(Conv2D(32, (3, 3), activation='relu', kernel_initializer='he_uniform', input_shape=(28, 28, 1)))
-	model.add(MaxPooling2D((2, 2)))
-	model.add(Flatten())
-	model.add(Dense(100, activation='relu', kernel_initializer='he_uniform'))
-	model.add(Dense(10, activation='softmax'))
-	# compile model
-	opt = SGD(learning_rate=0.01, momentum=0.9)
-	model.compile(optimizer=opt, loss='categorical_crossentropy', metrics=['accuracy'])
-	return model
+    """Define the sequential layers of the CNN model
+
+    Returns
+    =======
+    model: Sequential keras model
+        The CNN model
+    """
+    model = Sequential()
+    model.add(Conv2D(32, (3, 3), activation='relu', kernel_initializer='he_uniform', input_shape=(28, 28, 1)))
+    model.add(MaxPooling2D((2, 2)))
+    model.add(Flatten())
+    model.add(Dense(100, activation='relu', kernel_initializer='he_uniform'))
+    model.add(Dense(10, activation='softmax'))
+    # compile model
+    opt = SGD(learning_rate=0.01, momentum=0.9)
+    model.compile(optimizer=opt, loss='categorical_crossentropy', metrics=['accuracy'])
+    return model
     
-# run the processor
 def runProcessor(full=True):
+    """Run the CNN model and the RF and determines predictions and accuracies
+    
+    Parameters
+    ==========
+    full : boolean
+        Default value is True
+        Determines if all the MNIST records should be considered or only 
+        a subset shall be used for testing.
+
+    Returns
+    =======
+    acc_baseline: float
+        The accuracy of the RF baseline
+    acc_CNN: float
+    	The accuracy of the CNN model
+    y_test: numpy.ndarray
+    	The ground truth test labels
+    y_pred: numpy.ndarray
+    	The predicted test labels
+    """
     pp = Preprocessing.Preprocessing(full)
     # Get RF baseline
     acc_baseline = get_baseline(pp)
