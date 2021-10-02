@@ -2,8 +2,7 @@ from Processor import Processor
 import numpy as np
 
 def test_processor():
-    """
-    Test if the processor runs and returns expected values
+    """Test if the processor runs and returns expected values
     """
     acc_baseline, acc_CNN, y_test, y_pred = Processor.runProcessor(full=False)
     assert acc_baseline > 0

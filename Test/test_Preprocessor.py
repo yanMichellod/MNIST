@@ -2,8 +2,7 @@ from Preprocessing import Preprocessing
 import numpy as np
 
 def test_preprocessing():
-    """
-    Test if the shapes of the preprocessed data are correct
+    """Test if the shapes of the original MNIST and the preprocessed datasets are correct
     """
     pp = Preprocessing.Preprocessing(False)
     x_train, y_train, x_test, y_test = pp.getMNISTTrainData(), pp.getMNISTTrainLabel(), pp.getMNISTTestData(), pp.getMNISTTestLabel()
