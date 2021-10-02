@@ -8,18 +8,26 @@ from array import array
 
 def loadFromLocalFile(image_path, label_path):
     """Load the MNIST train and test datasets from local files.
+    
         Code from : https://www.kaggle.com/hojjatk/read-mnist-dataset
-        Attributes
-        -------
-        image_path : string path of the image dataset
-        label_path : string path of the label dataset
+        
+        Parameters
+        ==========
+        image_path : string
+            path of the image dataset
+        label_path : string 
+            path of the label dataset
 
         Returns
-        -------
-        x_train : uint8 NumPy array containing training data with shape (60000, 28, 28)
-        y_train : uint8 NumPy array containing training digit labels with shape (60000,)
-        x_test  : uint8 NumPy array containing test data with shape (10000, 28, 28)
-        y_test  : uint8 NumPy array containing test digit labels with shape (10000,)
+        =======
+        x_train : uint8 NumPy array 
+            containing training data with shape (60000, 28, 28)
+        y_train : uint8 NumPy array 
+            containing training digit labels with shape (60000,)
+        x_test  : uint8 NumPy array 
+            containing test data with shape (10000, 28, 28)
+        y_test  : uint8 NumPy array 
+            containing test digit labels with shape (10000,)
         """
     #Load label
     with gzip.open(label_path, 'rb') as file:
@@ -46,12 +54,24 @@ def loadFromLocalFile(image_path, label_path):
 
 def loadMNISTDatabase(forceLoadLocalFiles=False):
     """Load the MNIST train and test datasets.
+    
+    Parameters
+    ==========
+    forceLoadLocalFiles: boolean
+        Default is False
+        If True, the data are getting loaded from local files
+        Used for test coverage
+    
     Returns
-    -------
-    x_train : uint8 NumPy array containing training data with shape (60000, 28, 28)
-    y_train : uint8 NumPy array containing training digit labels with shape (60000,) 
-    x_test  : uint8 NumPy array containing test data with shape (10000, 28, 28)
-    y_test  : uint8 NumPy array containing test digit labels with shape (10000,) 
+    =======
+    x_train : uint8 NumPy array 
+        containing training data with shape (60000, 28, 28)
+    y_train : uint8 NumPy array 
+        containing training digit labels with shape (60000,) 
+    x_test  : uint8 NumPy array 
+        containing test data with shape (10000, 28, 28)
+    y_test  : uint8 NumPy array 
+        containing test digit labels with shape (10000,) 
     """
     x_train, y_train, x_test, y_test = [], [], [], []
     print('*************************************************')
