@@ -1,4 +1,5 @@
 setuptools
 numpy==1.19.2
 tensorflow==2.6.0
+sklearn==1.0
 keras==2.6.0
