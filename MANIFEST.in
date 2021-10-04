@@ -1,0 +1,2 @@
+include LICENSE README.md Database/data/t10k-images-idx3-ubyte.gz Database/data/t10k-labels-idx1-ubyte.gz Database/data/train-images-idx3-ubyte.gz Database/data/train-labels-idx1-ubyte.gz requirements.txt
+recursive-include docs conf.py *.rst *.ico *.png
