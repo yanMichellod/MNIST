@@ -1,4 +1,4 @@
-from setuptools import setup, find_packages
+from setuptools import find_packages, setup
 
 
 def load_requirements(f):
@@ -16,5 +16,5 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     install_requires=load_requirements("requirements.txt"),
-    entry_points={"console_scripts": ["mnist = main:main"]},
+    entry_points={"console_scripts": ["mnist = main.mnist:main"]},
 )
