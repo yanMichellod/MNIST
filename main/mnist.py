@@ -41,7 +41,7 @@ examples:
     print("Is the CNN accuracy higher then 0.95 (95%): {0}".format(an.checkHypothesis(0.95)))
     print("Save confusion matrix: {0}".format(an.saveConfusionMatrix()))
     print("Analysis done!")
-
+    return True
 
 if __name__ == "__main__":
     main()
