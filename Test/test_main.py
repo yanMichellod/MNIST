@@ -1,12 +1,6 @@
-import subprocess
+import os
     
 def test_main():
     """Run the cli command to test the whole analysis in test mode (full=False)
     """
-    proc = subprocess.Popen(["python", "main/mnist.py", "--full=False"],
-        stdout = subprocess.PIPE,
-        stderr = subprocess.PIPE,
-    )
-    out,err = proc.communicate()
-    assert proc.returncode == 0
-    assert len(out) > 0
+    assert os.system("pytest --cov main/mnist.py --full=False")
