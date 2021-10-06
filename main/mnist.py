@@ -5,10 +5,10 @@ def main():
     example_doc = """\
 examples:
     1. Runs the full analysis with the whole MNIST dataset:
-       $ python mnist.py
-       or
        $ python mnist.py --full=True
     2. Only runs for a subset of MNIST dataset (f.e. for quick test):
+       $ python mnist.py
+       or
        $ python mnist.py --full=False
     """
 
@@ -24,7 +24,7 @@ examples:
         "--full",
         choices=["True", "False"],
         nargs='*',
-        default=["True", "False"],
+        default=["False"],
         help="Decides if analysis have to take place at whole MNIST dataset. "
              "Options are %(default)s (default: %(default)s)",
         )
