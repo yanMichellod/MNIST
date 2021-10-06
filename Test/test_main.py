@@ -1,7 +1,7 @@
 import subprocess
     
 def test_main():
-    proc = subprocess.Popen("python main/mnist.py --full=False",
+    proc = subprocess.Popen(["python3", "main/mnist.py --full=False"],
         stdout = subprocess.PIPE,
         stderr = subprocess.PIPE,
     )
