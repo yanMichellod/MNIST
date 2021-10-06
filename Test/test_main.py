@@ -1,7 +1,9 @@
 import subprocess
     
 def test_main():
-    proc = subprocess.Popen(["python3", "main/mnist.py --full=False"],
+    """Run the cli command to test the whole analysis in test mode (full=False)
+    """
+    proc = subprocess.Popen(["python3", "main/mnist.py",  "--full=False"],
         stdout = subprocess.PIPE,
         stderr = subprocess.PIPE,
     )
