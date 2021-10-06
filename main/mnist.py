@@ -1,6 +1,10 @@
-def main():
+import argparse
+import sys
 
-    import argparse
+def main(args=None):
+
+    if not args:
+        args = sys.argv[1:]
 
     example_doc = """\
 examples:
@@ -29,13 +33,12 @@ examples:
              "Options are %(default)s (default: %(default)s)",
         )
 
-    args = parser.parse_args()
+    args = parser.parse_args(args)
 
-    from Analysis.Analysis import Analysis
-    full = True
-    if args.full[0] == "False":
-        full = False
+    full = (args.full[0] == "True")      
+       
     print("Start analysis of MNIST dataset (full={0})...".format(full))
+    from Analysis.Analysis import Analysis
     an = Analysis(full=full)
     print("Is the CNN accuracy higher then the accuracy of the random forest: {0}".format(an.checkVSBaseline()))
     print("Is the CNN accuracy higher then 0.95 (95%): {0}".format(an.checkHypothesis(0.95)))

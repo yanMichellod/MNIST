@@ -1,6 +1,7 @@
-import os
+from argparse import Namespace
+from main import mnist
     
 def test_main():
-    """Run the cli command to test the whole analysis in test mode (full=False)
+    """Run the cli main function to test the whole analysis in test mode (full=False)
     """
-    assert os.system("pytest --cov main/mnist.py --full=False")
+    assert mnist.main(['--full=False'])
