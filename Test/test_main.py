@@ -3,7 +3,7 @@ import subprocess
 def test_main():
     """Run the cli command to test the whole analysis in test mode (full=False)
     """
-    proc = subprocess.Popen(["python3", "main/mnist.py"],
+    proc = subprocess.Popen(["python", "main/mnist.py", "--full=False"],
         stdout = subprocess.PIPE,
         stderr = subprocess.PIPE,
     )
