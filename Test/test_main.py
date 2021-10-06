@@ -1,4 +1,10 @@
-import os
-
+import subprocess
+    
 def test_main():
-    assert os.system("python main/mnist.py --full=False")
+    proc = subprocess.Popen("python main/mnist.py --full=False",
+        stdout = subprocess.PIPE,
+        stderr = subprocess.PIPE,
+    )
+    out,err = proc.communicate()
+    assert proc.returncode == 0
+    assert len(out) > 0
