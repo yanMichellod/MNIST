@@ -16,17 +16,28 @@ Two different algorithms are used to achieve the goal, a random forest (RF) and 
 
 	modules
 	
+Hypothese
+=========
+
+It is not possible to achieve a classification accuracy for MNIST test set higher then 95%.
+
+The hypothese can be refected as the accuracy of the Random Forest is 97% and the CNN one is bigger than 98%!
+	
 How to deploy the project
 =========================
 
 There are two possibilities to deploy the project.
 
-1. Git clone
-	* Git clone : git clone https://github.com/yanMichellod/MNIST.git
-	* Create environement in the MNIST folder : conda env create -f envs/MNIST.yml
-	* Activate the environement : conda activate MNIST
-	* Run python file : python Analysis/analysis.py
+1. pip install git+https://github.com/yanMichellod/MNIST#egg=MNIST_Classification
+2. mnist (Have a look on help => mnist --help)
 
+
+How to uninstall the package
+============================
+
+pip uninstall MNIST_Classification
+
+We hope you enjoy to use your package :)
 
 Indices and tables
 ==================

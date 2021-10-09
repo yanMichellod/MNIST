@@ -1,18 +1,19 @@
-from Processor import Processor as pro
-from sklearn.metrics import confusion_matrix
-import seaborn as sns
 import numpy as np
+import seaborn as sns
 from matplotlib.pyplot import figure
+from sklearn.metrics import confusion_matrix
+
+from Processor import Processor as pro
 
 figure(figsize=(11, 11), dpi=80)
 
+
 class Analysis:
-    """Class Analysis for analysing the performance of the model 
-    """
+    """Class Analysis for analysing the performance of the model"""
 
     def __init__(self, full=True):
         """Constructor which run the Processor and store the results
-        
+
         self.acc_baseline: float
             The accuracy of the random forest
         self.acc_CNN: float
@@ -21,23 +22,41 @@ class Analysis:
             The ground truth labels
         self.y_pred: numpy.ndarray
             The predicted labels of the CNN model
-            
+
         Parameters
         ==========
         full : boolean
             Default value is True
-            Determines if all the MNIST records should be considered or only 
+            Determines if all the MNIST records should be considered or only
             a subset shall be used for testing.
         """
-        print('*************************************************')
-        print('Analyse results')
-        print('')
-        self.acc_baseline, self.acc_CNN, self.y_test, self.y_pred = pro.runProcessor(full=full)
-        print('*************************************************')
+
+        self.acc_baseline, self.acc_CNN, self.y_test, self.y_pred = pro.runProcessor(
+            full=full
+        )
+        print("*************************************************")
+
+    def getCNNAccuracy(self):
+        """Getter of CNN Accuracy
+
+        Returns
+        =======
+        float: The accuracy of the CNN model
+        """
+        return self.acc_CNN
+
+    def getRFAccuracy(self):
+        """Getter of RF Accuracy
+
+        Returns
+        =======
+        float: The accuracy of the RF model
+        """
+        return self.acc_baseline
 
     def checkVSBaseline(self):
         """Check if the CNN accuracy is higher then the accuracy of the RF baseline
-        
+
         Returns
         =======
         Boolean: True if CNN accuracy is higher then baseline, false otherwise
@@ -60,15 +79,14 @@ class Analysis:
     def saveConfusionMatrix(self):
         """Create a confusion matrix for CNN showing the confusion for the different digits
         The matrix is getting saved to file cfm.png.
-        
+
         Returns
         =======
         Boolean: Always True
         """
-        cfm = confusion_matrix(np.argmax(self.y_test, axis=1), np.argmax(self.y_pred, axis=1))
-        sns_plot = sns.heatmap(cfm/np.sum(cfm), annot=True, fmt='.2%', cmap='Blues')
+        cfm = confusion_matrix(
+            np.argmax(self.y_test, axis=1), np.argmax(self.y_pred, axis=1)
+        )
+        sns_plot = sns.heatmap(cfm / np.sum(cfm), annot=True, fmt=".2%", cmap="Blues")
         sns_plot.figure.savefig("cfm.png")
         return True
-
- 
-    
