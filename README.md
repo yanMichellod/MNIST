@@ -8,20 +8,7 @@
 ## Authors 
 Ralf Jandl & Yan Michellod 
 
-## Envs 
+## Documentation
 
-project for python 3.8
+Documentation available [here](https://yanmichellod.github.io/MNIST/)
 
-**Library** : 
-	* numpy==1.19.2
-    * tensorflow==2.6.0
-    * keras==2.6.0
-    * pytest
-	
-## Deployement
-
-1. Clone the git repository : git clone https://github.com/yanMichellod/MNIST.git
-2. Go to MNIST directory : cd Your/Local/Path/MNIST
-3. Create the environement  : conda env create –f envs/MNIST.yml
-4. Activate the environement : conda activate MNIST
-5. Run the script : 
