@@ -100,7 +100,6 @@ def runProcessor(full=True):
     pp = Preprocessing.Preprocessing(full)
     # Get RF baseline
     acc_baseline = get_baseline(pp)
-    print("Accuracy RF: %.3f" % (acc_baseline * 100.0))
     # get preprocessed data
     x_train, y_train, x_test, y_test = (
         pp.getMNISTPreprocessedTrainData(),
@@ -113,6 +112,5 @@ def runProcessor(full=True):
     model.fit(x_train, y_train, epochs=10, batch_size=32, verbose=0)
     # evaluate model on test dataset
     _, acc_CNN = model.evaluate(x_test, y_test, verbose=0)
-    print("Accuracy CNN: %.3f" % (acc_CNN * 100.0))
     y_pred = model.predict(x_test)
     return acc_baseline, acc_CNN, y_test, y_pred
