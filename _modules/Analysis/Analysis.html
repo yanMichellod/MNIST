@@ -1,0 +1,190 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Analysis.Analysis &#8212; MNIST  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for Analysis.Analysis</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">from</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">import</span> <span class="n">figure</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">confusion_matrix</span>
+
+<span class="kn">from</span> <span class="nn">Processor</span> <span class="kn">import</span> <span class="n">Processor</span> <span class="k">as</span> <span class="n">pro</span>
+
+<span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">11</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">80</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="Analysis"><a class="viewcode-back" href="../../Analysis.html#Analysis.Analysis.Analysis">[docs]</a><span class="k">class</span> <span class="nc">Analysis</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Class Analysis for analysing the performance of the model&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">full</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Constructor which run the Processor and store the results</span>
+
+<span class="sd">        self.acc_baseline: float</span>
+<span class="sd">            The accuracy of the random forest</span>
+<span class="sd">        self.acc_CNN: float</span>
+<span class="sd">            The accuracy of the CNN model</span>
+<span class="sd">        self.y_test: numpy.ndarray</span>
+<span class="sd">            The ground truth labels</span>
+<span class="sd">        self.y_pred: numpy.ndarray</span>
+<span class="sd">            The predicted labels of the CNN model</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ==========</span>
+<span class="sd">        full : boolean</span>
+<span class="sd">            Default value is True</span>
+<span class="sd">            Determines if all the MNIST records should be considered or only</span>
+<span class="sd">            a subset shall be used for testing.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">acc_baseline</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">acc_CNN</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_test</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_pred</span> <span class="o">=</span> <span class="n">pro</span><span class="o">.</span><span class="n">runProcessor</span><span class="p">(</span>
+            <span class="n">full</span><span class="o">=</span><span class="n">full</span>
+        <span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;*************************************************&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Analysis.getCNNAccuracy"><a class="viewcode-back" href="../../Analysis.html#Analysis.Analysis.Analysis.getCNNAccuracy">[docs]</a>    <span class="k">def</span> <span class="nf">getCNNAccuracy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Getter of CNN Accuracy</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        =======</span>
+<span class="sd">        float: The accuracy of the CNN model</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">acc_CNN</span></div>
+
+<div class="viewcode-block" id="Analysis.getRFAccuracy"><a class="viewcode-back" href="../../Analysis.html#Analysis.Analysis.Analysis.getRFAccuracy">[docs]</a>    <span class="k">def</span> <span class="nf">getRFAccuracy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Getter of RF Accuracy</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        =======</span>
+<span class="sd">        float: The accuracy of the RF model</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">acc_baseline</span></div>
+
+<div class="viewcode-block" id="Analysis.checkVSBaseline"><a class="viewcode-back" href="../../Analysis.html#Analysis.Analysis.Analysis.checkVSBaseline">[docs]</a>    <span class="k">def</span> <span class="nf">checkVSBaseline</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Check if the CNN accuracy is higher then the accuracy of the RF baseline</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        =======</span>
+<span class="sd">        Boolean: True if CNN accuracy is higher then baseline, false otherwise</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">acc_CNN</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">acc_baseline</span></div>
+
+<div class="viewcode-block" id="Analysis.checkHypothesis"><a class="viewcode-back" href="../../Analysis.html#Analysis.Analysis.Analysis.checkHypothesis">[docs]</a>    <span class="k">def</span> <span class="nf">checkHypothesis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hypothesis</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Check if the CNN accuracy is higher then the accuracy expected by hypothesis</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ==========</span>
+<span class="sd">        hypothesis: float</span>
+<span class="sd">            The accuracy expected by the hypothesis</span>
+<span class="sd">        Returns</span>
+<span class="sd">        =======</span>
+<span class="sd">        Boolean: True if CNN accuracy is higher then expected by hypothesis, false otherwise</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">acc_CNN</span> <span class="o">&gt;</span> <span class="n">hypothesis</span></div>
+
+<div class="viewcode-block" id="Analysis.saveConfusionMatrix"><a class="viewcode-back" href="../../Analysis.html#Analysis.Analysis.Analysis.saveConfusionMatrix">[docs]</a>    <span class="k">def</span> <span class="nf">saveConfusionMatrix</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create a confusion matrix for CNN showing the confusion for the different digits</span>
+<span class="sd">        The matrix is getting saved to file cfm.png.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        =======</span>
+<span class="sd">        Boolean: Always True</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cfm</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_test</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">sns_plot</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">cfm</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">cfm</span><span class="p">),</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s2">&quot;.2%&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Blues&quot;</span><span class="p">)</span>
+        <span class="n">sns_plot</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;cfm.png&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span></div></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">MNIST</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Ralf Jandl & Yan Michellod.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.2.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

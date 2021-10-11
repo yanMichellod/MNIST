@@ -1,0 +1,271 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Preprocessing.Preprocessing &#8212; MNIST  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for Preprocessing.Preprocessing</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">tensorflow.keras.utils</span> <span class="kn">import</span> <span class="n">to_categorical</span>
+
+<span class="kn">from</span> <span class="nn">Database</span> <span class="kn">import</span> <span class="n">MNISTDatabase</span> <span class="k">as</span> <span class="n">db</span>
+
+
+<div class="viewcode-block" id="Preprocessing"><a class="viewcode-back" href="../../Preprocessing.html#Preprocessing.Preprocessing.Preprocessing">[docs]</a><span class="k">class</span> <span class="nc">Preprocessing</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Class Preprocessing used to pre-process data before using machine learning algorithm&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">full</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Constructor which load the data from Database and store the original datasets and also the preprocessed datasets</span>
+
+<span class="sd">        self.x_train: numpy.ndarray</span>
+<span class="sd">            The training dataset</span>
+<span class="sd">        self.y_train: numpy.ndarray</span>
+<span class="sd">            The training labels</span>
+<span class="sd">        self.x_test: numpy.ndarray</span>
+<span class="sd">            The test dataset</span>
+<span class="sd">        self.y_test: numpy.ndarray</span>
+<span class="sd">            The test labels (ground truth)</span>
+<span class="sd">        self.x_train_preprocess: numpy.ndarray</span>
+<span class="sd">            The preprocessed training dataset</span>
+<span class="sd">        self.y_train_preprocess: numpy.ndarray</span>
+<span class="sd">            The preprocessed training labels</span>
+<span class="sd">        self.x_test_preprocess: numpy.ndarray</span>
+<span class="sd">            The preprocessed test dataset</span>
+<span class="sd">        self.y_test_preprocess: numpy.ndarray</span>
+<span class="sd">            The preprocessed test labels (ground truth)</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ==========</span>
+<span class="sd">        full : boolean</span>
+<span class="sd">            Default value is True</span>
+<span class="sd">            Determines if all the MNIST records should be considered or only</span>
+<span class="sd">            a subset shall be used for testing.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">x_train</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_train</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_test</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_test</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">loadMNISTDatabase</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;*************************************************&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Preprocess Data&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">full</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;TESTMODE --&gt; Only subset of data used!&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">x_train</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_train</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">100</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">y_train</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_train</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">100</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">x_test</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_test</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">y_test</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_test</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="p">]</span>
+        <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">x_train_preprocess</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">y_train_preprocess</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">x_test_preprocess</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">y_test_preprocess</span><span class="p">,</span>
+        <span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">preprocess_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_train</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_train</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_test</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_test</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;*************************************************&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Preprocessing.getMNISTTrainData"><a class="viewcode-back" href="../../Preprocessing.html#Preprocessing.Preprocessing.Preprocessing.getMNISTTrainData">[docs]</a>    <span class="k">def</span> <span class="nf">getMNISTTrainData</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get the training dataset</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        =======</span>
+<span class="sd">        self.x_train : uint8 numpy array</span>
+<span class="sd">            training data with shape (60000, 28, 28)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_train</span></div>
+
+<div class="viewcode-block" id="Preprocessing.getMNISTTrainLabel"><a class="viewcode-back" href="../../Preprocessing.html#Preprocessing.Preprocessing.Preprocessing.getMNISTTrainLabel">[docs]</a>    <span class="k">def</span> <span class="nf">getMNISTTrainLabel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get the training labels</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        =======</span>
+<span class="sd">        self.y_train : uint8 numpy array</span>
+<span class="sd">            training digit labels with shape (60000,)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_train</span></div>
+
+<div class="viewcode-block" id="Preprocessing.getMNISTTestData"><a class="viewcode-back" href="../../Preprocessing.html#Preprocessing.Preprocessing.Preprocessing.getMNISTTestData">[docs]</a>    <span class="k">def</span> <span class="nf">getMNISTTestData</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get the test dataset</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        =======</span>
+<span class="sd">        self.x_test : uint8 numpy array</span>
+<span class="sd">            testing data with shape (10000, 28, 28)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_test</span></div>
+
+<div class="viewcode-block" id="Preprocessing.getMNISTTestLabel"><a class="viewcode-back" href="../../Preprocessing.html#Preprocessing.Preprocessing.Preprocessing.getMNISTTestLabel">[docs]</a>    <span class="k">def</span> <span class="nf">getMNISTTestLabel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get the test labels</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        =======</span>
+<span class="sd">        self.y_test : uint8 numpy array</span>
+<span class="sd">            training digit labels with shape (10000,)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_test</span></div>
+
+<div class="viewcode-block" id="Preprocessing.getMNISTPreprocessedTrainData"><a class="viewcode-back" href="../../Preprocessing.html#Preprocessing.Preprocessing.Preprocessing.getMNISTPreprocessedTrainData">[docs]</a>    <span class="k">def</span> <span class="nf">getMNISTPreprocessedTrainData</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get preprocessed training dataset</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        =======</span>
+<span class="sd">        self.x_train_preprocess : uint8 numpy array</span>
+<span class="sd">            training data with shape (60000, 28, 28, 1)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_train_preprocess</span></div>
+
+<div class="viewcode-block" id="Preprocessing.getMNISTPreprocessedTrainLabel"><a class="viewcode-back" href="../../Preprocessing.html#Preprocessing.Preprocessing.Preprocessing.getMNISTPreprocessedTrainLabel">[docs]</a>    <span class="k">def</span> <span class="nf">getMNISTPreprocessedTrainLabel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get preprocessed training labels</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        self.y_train_preprocess : uint8 numpy array</span>
+<span class="sd">            training digit labels with shape (60000, 10)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_train_preprocess</span></div>
+
+<div class="viewcode-block" id="Preprocessing.getMNISTPreprocessedTestData"><a class="viewcode-back" href="../../Preprocessing.html#Preprocessing.Preprocessing.Preprocessing.getMNISTPreprocessedTestData">[docs]</a>    <span class="k">def</span> <span class="nf">getMNISTPreprocessedTestData</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get preprocessed test dataset</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        self.x_test_preprocess : uint8 numpy array</span>
+<span class="sd">            testing data with shape (10000, 28, 28, 1)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_test_preprocess</span></div>
+
+<div class="viewcode-block" id="Preprocessing.getMNISTPreprocessedTestLabel"><a class="viewcode-back" href="../../Preprocessing.html#Preprocessing.Preprocessing.Preprocessing.getMNISTPreprocessedTestLabel">[docs]</a>    <span class="k">def</span> <span class="nf">getMNISTPreprocessedTestLabel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get preprocessed test labels</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        self.y_test_preprocess : uint8 numpy array</span>
+<span class="sd">            training digit labels with shape (10000, 10)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_test_preprocess</span></div>
+
+<div class="viewcode-block" id="Preprocessing.preprocess_data"><a class="viewcode-back" href="../../Preprocessing.html#Preprocessing.Preprocessing.Preprocessing.preprocess_data">[docs]</a>    <span class="k">def</span> <span class="nf">preprocess_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Method which preprocess the data to be used by CNN model</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ==========</span>
+<span class="sd">        x_train : uint numpy array</span>
+<span class="sd">            training digit data with shape (60000, 28, 28)</span>
+<span class="sd">        y_train : uint numpy array</span>
+<span class="sd">            training digit labels with shape (60000,)</span>
+<span class="sd">        x_test : uint numpy array</span>
+<span class="sd">            testing digit labels with shape (10000, 28, 28)</span>
+<span class="sd">        y_test : uint numpy array</span>
+<span class="sd">            testing digit labels with shape (10000,)</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        =======</span>
+<span class="sd">        x_train : uint numpy preprocess array</span>
+<span class="sd">            training digit data with shape (60000, 28, 28, 1)</span>
+<span class="sd">        y_train : uint numpy preprocess array</span>
+<span class="sd">            training digit labels with shape (60000, 10)</span>
+<span class="sd">        x_test : uint numpy preprocess array</span>
+<span class="sd">            testing digit labels with shape (10000, 28, 28, 1)</span>
+<span class="sd">        y_test : uint numpy preprocess array</span>
+<span class="sd">            testing digit labels with shape (10000, 10)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># reshape dataset to have a single channel</span>
+        <span class="n">x_train</span> <span class="o">=</span> <span class="n">x_train</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">x_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="n">x_test</span> <span class="o">=</span> <span class="n">x_test</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">x_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="c1"># one hot encode target values</span>
+        <span class="n">y_train</span> <span class="o">=</span> <span class="n">to_categorical</span><span class="p">(</span><span class="n">y_train</span><span class="p">)</span>
+        <span class="n">y_test</span> <span class="o">=</span> <span class="n">to_categorical</span><span class="p">(</span><span class="n">y_test</span><span class="p">)</span>
+        <span class="c1"># convert from integers to floats</span>
+        <span class="n">x_train</span> <span class="o">=</span> <span class="n">x_train</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float32&quot;</span><span class="p">)</span>
+        <span class="n">x_test</span> <span class="o">=</span> <span class="n">x_test</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float32&quot;</span><span class="p">)</span>
+        <span class="c1"># normalize to range 0-1</span>
+        <span class="n">x_train</span> <span class="o">=</span> <span class="n">x_train</span> <span class="o">/</span> <span class="mf">255.0</span>
+        <span class="n">x_test</span> <span class="o">=</span> <span class="n">x_test</span> <span class="o">/</span> <span class="mf">255.0</span>
+        <span class="c1"># return normalized images</span>
+        <span class="k">return</span> <span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span></div></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">MNIST</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Ralf Jandl & Yan Michellod.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.2.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

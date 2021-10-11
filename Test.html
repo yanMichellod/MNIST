@@ -1,0 +1,201 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Test package &#8212; MNIST  documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="test-package">
+<h1>Test package<a class="headerlink" href="#test-package" title="Permalink to this headline">¶</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="module-Test.test_Analysis">
+<span id="test-test-analysis-module"></span><h2>Test.test_Analysis module<a class="headerlink" href="#module-Test.test_Analysis" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="Test.test_Analysis.testAnalysis">
+<span class="sig-prename descclassname"><span class="pre">Test.test_Analysis.</span></span><span class="sig-name descname"><span class="pre">testAnalysis</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Test/test_Analysis.html#testAnalysis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Test.test_Analysis.testAnalysis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run several tests to check if Analysis works correct</p>
+<p>Test if accuracy of CNN is higher then accuracy of baseline
+Test if accuracy of CNN is higher or equal to the expected accuracy of hypothesis
+Test if generation and saving of confusion matrix works</p>
+</dd></dl>
+
+</section>
+<section id="module-Test.test_Database">
+<span id="test-test-database-module"></span><h2>Test.test_Database module<a class="headerlink" href="#module-Test.test_Database" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="Test.test_Database.test_load_data_shape">
+<span class="sig-prename descclassname"><span class="pre">Test.test_Database.</span></span><span class="sig-name descname"><span class="pre">test_load_data_shape</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Test/test_Database.html#test_load_data_shape"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Test.test_Database.test_load_data_shape" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test if the keras training and test datasets have the expected shapes</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Test.test_Database.test_load_data_shape_local">
+<span class="sig-prename descclassname"><span class="pre">Test.test_Database.</span></span><span class="sig-name descname"><span class="pre">test_load_data_shape_local</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Test/test_Database.html#test_load_data_shape_local"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Test.test_Database.test_load_data_shape_local" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test if the local training and test datasets have the expected shapes</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Test.test_Database.test_test_data_not_corrupted">
+<span class="sig-prename descclassname"><span class="pre">Test.test_Database.</span></span><span class="sig-name descname"><span class="pre">test_test_data_not_corrupted</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Test/test_Database.html#test_test_data_not_corrupted"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Test.test_Database.test_test_data_not_corrupted" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test if the test data are not corrupted</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Test.test_Database.test_test_data_path">
+<span class="sig-prename descclassname"><span class="pre">Test.test_Database.</span></span><span class="sig-name descname"><span class="pre">test_test_data_path</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Test/test_Database.html#test_test_data_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Test.test_Database.test_test_data_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test if the path to the test data exist</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Test.test_Database.test_test_label_not_corrupted">
+<span class="sig-prename descclassname"><span class="pre">Test.test_Database.</span></span><span class="sig-name descname"><span class="pre">test_test_label_not_corrupted</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Test/test_Database.html#test_test_label_not_corrupted"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Test.test_Database.test_test_label_not_corrupted" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test if the test label are not corrupted</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Test.test_Database.test_test_label_path">
+<span class="sig-prename descclassname"><span class="pre">Test.test_Database.</span></span><span class="sig-name descname"><span class="pre">test_test_label_path</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Test/test_Database.html#test_test_label_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Test.test_Database.test_test_label_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test if the path to the test label exist</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Test.test_Database.test_train_data_not_corrupted">
+<span class="sig-prename descclassname"><span class="pre">Test.test_Database.</span></span><span class="sig-name descname"><span class="pre">test_train_data_not_corrupted</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Test/test_Database.html#test_train_data_not_corrupted"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Test.test_Database.test_train_data_not_corrupted" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test if the train data are not corrupted</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Test.test_Database.test_train_data_path">
+<span class="sig-prename descclassname"><span class="pre">Test.test_Database.</span></span><span class="sig-name descname"><span class="pre">test_train_data_path</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Test/test_Database.html#test_train_data_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Test.test_Database.test_train_data_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test if the path to the train data exist</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Test.test_Database.test_train_label_not_corrupted">
+<span class="sig-prename descclassname"><span class="pre">Test.test_Database.</span></span><span class="sig-name descname"><span class="pre">test_train_label_not_corrupted</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Test/test_Database.html#test_train_label_not_corrupted"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Test.test_Database.test_train_label_not_corrupted" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test if the train labels are not corrupted</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Test.test_Database.test_train_label_path">
+<span class="sig-prename descclassname"><span class="pre">Test.test_Database.</span></span><span class="sig-name descname"><span class="pre">test_train_label_path</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Test/test_Database.html#test_train_label_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Test.test_Database.test_train_label_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test if the path to the train label exist</p>
+</dd></dl>
+
+</section>
+<section id="module-Test.test_Preprocessor">
+<span id="test-test-preprocessor-module"></span><h2>Test.test_Preprocessor module<a class="headerlink" href="#module-Test.test_Preprocessor" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="Test.test_Preprocessor.test_preprocessing">
+<span class="sig-prename descclassname"><span class="pre">Test.test_Preprocessor.</span></span><span class="sig-name descname"><span class="pre">test_preprocessing</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Test/test_Preprocessor.html#test_preprocessing"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Test.test_Preprocessor.test_preprocessing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test if the shapes of the original MNIST and the preprocessed datasets are correct</p>
+</dd></dl>
+
+</section>
+<section id="module-Test.test_Processor">
+<span id="test-test-processor-module"></span><h2>Test.test_Processor module<a class="headerlink" href="#module-Test.test_Processor" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="Test.test_Processor.test_processor">
+<span class="sig-prename descclassname"><span class="pre">Test.test_Processor.</span></span><span class="sig-name descname"><span class="pre">test_processor</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Test/test_Processor.html#test_processor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Test.test_Processor.test_processor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test if the processor runs and returns expected values</p>
+</dd></dl>
+
+</section>
+<section id="module-Test">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-Test" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">MNIST</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Ralf Jandl & Yan Michellod.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.2.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/Test.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

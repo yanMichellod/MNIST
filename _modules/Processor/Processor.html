@@ -1,0 +1,214 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Processor.Processor &#8212; MNIST  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for Processor.Processor</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Inspired by https://machinelearningmastery.com/how-to-develop-a-convolutional-neural-network-from-scratch-for-mnist-handwritten-digit-classification/</span>
+<span class="c1"># and https://www.kaggle.com/ashwani07/mnist-classification-using-random-forest</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;TF_CPP_MIN_LOG_LEVEL&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;3&quot;</span>
+
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.layers</span> <span class="kn">import</span> <span class="n">Conv2D</span><span class="p">,</span> <span class="n">Dense</span><span class="p">,</span> <span class="n">Flatten</span><span class="p">,</span> <span class="n">MaxPooling2D</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.models</span> <span class="kn">import</span> <span class="n">Sequential</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.optimizers</span> <span class="kn">import</span> <span class="n">SGD</span>
+
+<span class="kn">from</span> <span class="nn">Preprocessing</span> <span class="kn">import</span> <span class="n">Preprocessing</span>
+
+<span class="n">tf</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">set_seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">random</span>
+
+<span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="get_baseline"><a class="viewcode-back" href="../../Processor.html#Processor.Processor.get_baseline">[docs]</a><span class="k">def</span> <span class="nf">get_baseline</span><span class="p">(</span><span class="n">pp</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Run the random forest baseline and calculate accuracy</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ==========</span>
+<span class="sd">    pp : Preprocessor</span>
+<span class="sd">        Used to get the original MNIST data</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    =======</span>
+<span class="sd">    accuracy: boolean</span>
+<span class="sd">        The accuracy of the RF baseline</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># get MNIST data</span>
+    <span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">pp</span><span class="o">.</span><span class="n">getMNISTTrainData</span><span class="p">(),</span>
+        <span class="n">pp</span><span class="o">.</span><span class="n">getMNISTTrainLabel</span><span class="p">(),</span>
+        <span class="n">pp</span><span class="o">.</span><span class="n">getMNISTTestData</span><span class="p">(),</span>
+        <span class="n">pp</span><span class="o">.</span><span class="n">getMNISTTestLabel</span><span class="p">(),</span>
+    <span class="p">)</span>
+    <span class="c1"># define Random forest and fit it</span>
+    <span class="n">rf</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+    <span class="n">rf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">x_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">28</span> <span class="o">*</span> <span class="mi">28</span><span class="p">),</span> <span class="n">y_train</span><span class="p">)</span>
+    <span class="c1"># run prediction and return accuracy</span>
+    <span class="n">pred</span> <span class="o">=</span> <span class="n">rf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x_test</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">x_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">28</span> <span class="o">*</span> <span class="mi">28</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">pred</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="define_model"><a class="viewcode-back" href="../../Processor.html#Processor.Processor.define_model">[docs]</a><span class="k">def</span> <span class="nf">define_model</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Define the sequential layers of the CNN model</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    =======</span>
+<span class="sd">    model: Sequential keras model</span>
+<span class="sd">        The CNN model</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">Sequential</span><span class="p">()</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+        <span class="n">Conv2D</span><span class="p">(</span>
+            <span class="mi">32</span><span class="p">,</span>
+            <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+            <span class="n">activation</span><span class="o">=</span><span class="s2">&quot;relu&quot;</span><span class="p">,</span>
+            <span class="n">kernel_initializer</span><span class="o">=</span><span class="s2">&quot;he_uniform&quot;</span><span class="p">,</span>
+            <span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">MaxPooling2D</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)))</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Flatten</span><span class="p">())</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s2">&quot;relu&quot;</span><span class="p">,</span> <span class="n">kernel_initializer</span><span class="o">=</span><span class="s2">&quot;he_uniform&quot;</span><span class="p">))</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s2">&quot;softmax&quot;</span><span class="p">))</span>
+    <span class="c1"># compile model</span>
+    <span class="n">opt</span> <span class="o">=</span> <span class="n">SGD</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">momentum</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="n">opt</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="s2">&quot;categorical_crossentropy&quot;</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;accuracy&quot;</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">model</span></div>
+
+
+<div class="viewcode-block" id="runProcessor"><a class="viewcode-back" href="../../Processor.html#Processor.Processor.runProcessor">[docs]</a><span class="k">def</span> <span class="nf">runProcessor</span><span class="p">(</span><span class="n">full</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Run the CNN model and the RF and determines predictions and accuracies</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ==========</span>
+<span class="sd">    full : boolean</span>
+<span class="sd">        Default value is True</span>
+<span class="sd">        Determines if all the MNIST records should be considered or only</span>
+<span class="sd">        a subset shall be used for testing.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    =======</span>
+<span class="sd">    acc_baseline: float</span>
+<span class="sd">        The accuracy of the RF baseline</span>
+<span class="sd">    acc_CNN: float</span>
+<span class="sd">        The accuracy of the CNN model</span>
+<span class="sd">    y_test: numpy.ndarray</span>
+<span class="sd">        The ground truth test labels</span>
+<span class="sd">    y_pred: numpy.ndarray</span>
+<span class="sd">        The predicted test labels</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">pp</span> <span class="o">=</span> <span class="n">Preprocessing</span><span class="o">.</span><span class="n">Preprocessing</span><span class="p">(</span><span class="n">full</span><span class="p">)</span>
+    <span class="c1"># Get RF baseline</span>
+    <span class="n">acc_baseline</span> <span class="o">=</span> <span class="n">get_baseline</span><span class="p">(</span><span class="n">pp</span><span class="p">)</span>
+    <span class="c1"># get preprocessed data</span>
+    <span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">pp</span><span class="o">.</span><span class="n">getMNISTPreprocessedTrainData</span><span class="p">(),</span>
+        <span class="n">pp</span><span class="o">.</span><span class="n">getMNISTPreprocessedTrainLabel</span><span class="p">(),</span>
+        <span class="n">pp</span><span class="o">.</span><span class="n">getMNISTPreprocessedTestData</span><span class="p">(),</span>
+        <span class="n">pp</span><span class="o">.</span><span class="n">getMNISTPreprocessedTestLabel</span><span class="p">(),</span>
+    <span class="p">)</span>
+    <span class="c1"># define and train the CNN model</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">define_model</span><span class="p">()</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="c1"># evaluate model on test dataset</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">acc_CNN</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x_test</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">acc_baseline</span><span class="p">,</span> <span class="n">acc_CNN</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">MNIST</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Ralf Jandl & Yan Michellod.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.2.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
